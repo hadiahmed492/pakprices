@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PakPrices — Compare prices from Daraz, OLX and local stores across Pakistan. Find the best deals instantly." />
+  <title>PakPrices — Compare Prices Across Pakistan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <div class="logo-icon">🏷️</div>
+        <span class="logo-text">Pak<span>Prices</span></span>
+      </div>
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#">Top Deals</a>
+        <a href="#">Categories</a>
+        <a href="#" class="nav-cta">Submit a Price</a>
+      </nav>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#" onclick="toggleMenu()">Home</a>
+      <a href="#" onclick="toggleMenu()">Top Deals</a>
+      <a href="#" onclick="toggleMenu()">Categories</a>
+      <a href="#" onclick="toggleMenu()">Submit a Price</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-badge">🇵🇰 Pakistan's #1 Price Comparison Site</div>
+      <h1>Stop Overpaying.<br/>Compare Prices Instantly.</h1>
+      <p class="hero-sub">We track prices from Daraz, OLX, and local stores — so you always find the best deal.</p>
+      <div class="search-wrap">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search iPhone 15, Samsung TV, Nike shoes..." autocomplete="off" onkeydown="if(event.key==='Enter')doSearch()" />
+          <button class="search-btn" onclick="doSearch()">Search</button>
+        </div>
+        <div class="popular-tags">
+          <span>Popular:</span>
+          <button onclick="quickSearch('iPhone')">iPhone 15</button>
+          <button onclick="quickSearch('Samsung')">Samsung Galaxy</button>
+          <button onclick="quickSearch('HP')">HP Laptop</button>
+          <button onclick="quickSearch('AC')">Haier AC</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="container stats-inner">
+      <div class="stat"><strong>1,240+</strong><span>Products Tracked</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><strong>3</strong><span>Stores Compared</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><strong>Rs 890</strong><span>Avg Savings</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><strong>Live</strong><span>Price Updates</span></div>
+    </div>
+  </div>
+
+  <main class="main-content">
+    <div class="container">
+
+      <div class="categories-row">
+        <button class="cat-btn active" onclick="filterCat('all',this)">🛒 All</button>
+        <button class="cat-btn" onclick="filterCat('mobile',this)">📱 Mobiles</button>
+        <button class="cat-btn" onclick="filterCat('laptop',this)">💻 Laptops</button>
+        <button class="cat-btn" onclick="filterCat('appliance',this)">🏠 Appliances</button>
+        <button class="cat-btn" onclick="filterCat('fashion',this)">👟 Fashion</button>
+        <button class="cat-btn" onclick="filterCat('grocery',this)">🛍️ Grocery</button>
+      </div>
+
+      <div class="toolbar">
+        <p class="results-count" id="resultsCount">Showing all products</p>
+        <div class="sort-wrap">
+          <label for="sortSelect">Sort by:</label>
+          <select id="sortSelect" onchange="renderProducts(getFiltered())">
+            <option value="default">Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="savings">Best Savings</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="products-grid" id="productsGrid"></div>
+      <div class="no-results" id="noResults" style="display:none">
+        <div style="font-size:48px">🔍</div>
+        <h3>No products found</h3>
+        <p>Try a different search term</p>
+        <button onclick="resetSearch()">Clear Search</button>
+      </div>
+    </div>
+  </main>
+
+  <section class="how-section">
+    <div class="container">
+      <h2 class="section-title">How PakPrices Works</h2>
+      <div class="steps-grid">
+        <div class="step-card"><div class="step-num">1</div><div class="step-icon">🔍</div><h3>Search a Product</h3><p>Type any product name — mobile, laptop, appliance, or anything else.</p></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-icon">⚡</div><h3>We Compare Instantly</h3><p>Our engine checks Daraz, OLX, and local stores in real time.</p></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-icon">💰</div><h3>You Save Money</h3><p>Pick the cheapest option and click through to buy directly.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="logo-text">Pak<span>Prices</span></span>
+      <p>© 2026 PakPrices. Prices updated automatically every 30 minutes.</p>
+      <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
